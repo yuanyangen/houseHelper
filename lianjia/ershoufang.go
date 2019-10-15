@@ -38,6 +38,10 @@ func CrawlAllPublishedDataByCommunity(communityName string) {
 				oneBatchIds = append(oneBatchIds, idInt)
 			}
 		})
+		if len(oneBatchIds) == 0 {
+			log.Printf("all data has has been crawl, finish")
+			return
+		}
 
 		for _,id:= range oneBatchIds {
 			info := CrawlOneHouseInfo(id)
@@ -85,6 +89,9 @@ func CrawlOneHouseInfo(id int64) *model.HouseInfo {
 		doc.Find("#cartCount").Each(func(i int, selection *goquery.Selection) {
 			houseInfo.TotalSeeCount, _ = strconv.ParseInt(selection.Text(), 10, 64)
 		})
+
+		houseInfo.CommunityName = doc.Find(".communityName").Find(".info").Text()
+
 
 		for k, v := range rawLianjiaData {
 			switch k {
@@ -210,6 +217,7 @@ func CrawlOneHouseInfo(id int64) *model.HouseInfo {
 		}
 	}
 
+
 	//关注信息
 	{
 		url := fmt.Sprintf("https://bj.lianjia.com/ershoufang/houseseerecord?id=%d", id)
@@ -223,6 +231,7 @@ func CrawlOneHouseInfo(id int64) *model.HouseInfo {
 		houseInfo.MonthSeeCount = seeRecord.Data.TotalCnt
 	}
 	houseInfo.ModifyTime = time.Now().Unix()
+	houseInfo.CrawlDate = time.Now().Format("20060102")
 
 	return houseInfo
 }

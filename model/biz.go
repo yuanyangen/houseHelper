@@ -4,6 +4,7 @@ type HouseInfo struct {
 	*LianjiaBaseHouseInfo
 	*LianjiaTradeInfo
 	*StateInfo
+	CrawlDate string
 	ModifyTime int64
 }
 
@@ -14,6 +15,7 @@ type HouseDealInfo struct {
 	DealTime int64 // 成交时间， unix时间戳
 	ModifyTime int64 //
 	Duration int64 // 成交周期， 单位天
+	CrawlDate string
 }
 
 const WarnSupplyTypeSelf = 1
@@ -31,6 +33,7 @@ type LianjiaBaseHouseInfo struct {
 	WarnSupplyType int    //
 	DecorateType   int
 	HouseUsageType string // 房屋用途 普通住宅
+	CommunityName string
 
 	ForwardType  string  // 朝向
 	Elevator     bool    // 是否有电梯

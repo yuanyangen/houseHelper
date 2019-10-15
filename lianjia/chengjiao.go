@@ -63,11 +63,22 @@ func CrawlAllChengjiaoByCommunity(communityName string) {
 					dealInfo.Duration,_ = strconv.ParseInt(rawPriceS, 10, 64)
 				}
 			})
+			dealInfo.CrawlDate = time.Now().Format("20060102")
 			dealInfo.ModifyTime = time.Now().Unix()
 			oneBatchInfo = append(oneBatchInfo, dealInfo)
 		})
 
+		if len(oneBatchInfo) == 0 {
+			log.Printf("all data has been crawled, finish")
+			return
+		}
+
 		for _,oneDeal := range oneBatchInfo {
+			c := QueryDealCountByInfo(oneDeal)
+			if c > 0 {
+				log.Println("chengjiao data has been crawled ")
+				return
+			}
 			saveDealInfo(oneDeal)
 		}
 
