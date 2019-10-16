@@ -44,7 +44,7 @@ func crawlpublish() {
 
 	count:= lianjia.QueryErshouInfoCount(date)
 
-	if count >= 0 {
+	if count > 0 {
 		log.Printf("already has data , ignore\n")
 		return
 	}

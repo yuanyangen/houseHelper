@@ -84,7 +84,12 @@ func QueryErshouInfoCount(date string) int64 {
 
 	resp,err := queryWithSql(sql)
 	if err != nil {
-		fmt.Println(err)
+		log.Printf("query es error %v", err)
+		return 0
+	}
+	if strings.Contains(resp, "error") {
+		log.Printf("query es error %v", err)
+		return 0
 	}
 	tmp := strings.Split(resp, "\n")
 	tmp = tmp[2:]
