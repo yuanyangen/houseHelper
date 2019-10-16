@@ -19,7 +19,7 @@ var communityNames = []string {
 func main () {
 	for {
 		go oneRound()
-		time.Sleep(time.Hour * 4)
+		time.Sleep(time.Hour * 24)
 	}
 }
 
