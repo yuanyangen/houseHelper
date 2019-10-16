@@ -1,7 +1,6 @@
 package lianjia
 
 import (
-	"encoding/json"
 	"fmt"
 	"github.com/PuerkitoBio/goquery"
 	"github.com/yuanyangen/houseHelper/http_utils"
@@ -220,18 +219,18 @@ func CrawlOneHouseInfo(id int64) *model.HouseInfo {
 
 
 	//关注信息
-	{
-		url := fmt.Sprintf("https://bj.lianjia.com/ershoufang/houseseerecord?id=%d", id)
-		resp := http_utils.Get(url)
-		seeRecord := SeeRecord{}
-		err := json.Unmarshal([]byte(resp), &seeRecord)
-		if err != nil {
-			log.Printf("get see record error data %s, err:%v", resp, err.Error())
-		} else {
-			houseInfo.WeekSeeCount = seeRecord.Data.ThisWeek
-			houseInfo.MonthSeeCount = seeRecord.Data.TotalCnt
-		}
-	}
+	//{
+	//	url := fmt.Sprintf("https://bj.lianjia.com/ershoufang/houseseerecord?id=%d", id)
+	//	resp := http_utils.Get(url)
+	//	seeRecord := SeeRecord{}
+	//	err := json.Unmarshal([]byte(resp), &seeRecord)
+	//	if err != nil {
+	//		log.Printf("get see record error data %s, err:%v", resp, err.Error())
+	//	} else {
+	//		houseInfo.WeekSeeCount = seeRecord.Data.ThisWeek
+	//		houseInfo.MonthSeeCount = seeRecord.Data.TotalCnt
+	//	}
+	//}
 	houseInfo.ModifyTime = time.Now().Unix()
 	houseInfo.CrawlDate = time.Now().Format("20060102")
 
