@@ -72,6 +72,10 @@ func QueryDealCountByInfo(in *model.HouseDealInfo) int64 {
 	if err != nil {
 		fmt.Println(err)
 	}
+	if strings.Contains(resp, "error") {
+		log.Printf("query es error %v", err)
+		return 0
+	}
 	tmp := strings.Split(resp, "\n")
 	tmp = tmp[2:]
 	c,_ := strconv.ParseInt(strings.TrimSpace(tmp[0]), 10, 64)
