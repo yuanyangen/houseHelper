@@ -28,7 +28,8 @@ func CrawlAllPublishedDataByCommunity(communityName string) {
 		body := http_utils.Get(url)
 		doc, err := goquery.NewDocumentFromReader(strings.NewReader(body))
 		if err != nil {
-			log.Fatal(err)
+			log.Printf("build dom parser for resp error %v %v", body, err)
+			continue
 		}
 
 		doc.Find(".item").Each(func(i int, selection *goquery.Selection) {
@@ -225,10 +226,11 @@ func CrawlOneHouseInfo(id int64) *model.HouseInfo {
 		seeRecord := SeeRecord{}
 		err := json.Unmarshal([]byte(resp), &seeRecord)
 		if err != nil {
-			fmt.Println(err.Error())
+			log.Printf("get see record error data %s, err:%v", resp, err.Error())
+		} else {
+			houseInfo.WeekSeeCount = seeRecord.Data.ThisWeek
+			houseInfo.MonthSeeCount = seeRecord.Data.TotalCnt
 		}
-		houseInfo.WeekSeeCount = seeRecord.Data.ThisWeek
-		houseInfo.MonthSeeCount = seeRecord.Data.TotalCnt
 	}
 	houseInfo.ModifyTime = time.Now().Unix()
 	houseInfo.CrawlDate = time.Now().Format("20060102")

@@ -12,5 +12,5 @@ func TestAll(t *testing.T) {
 
 func TestCrawlOneHouseInfo(t *testing.T) {
 	r :=  CrawlOneHouseInfo(101105228948)
-	fmt.Println(r)
+	log.Println(r)
 }

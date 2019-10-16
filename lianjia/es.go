@@ -31,11 +31,11 @@ func saveErshouInfo(in *model.HouseInfo) {
 	req.Header.Add("Content-Type", "application/json")
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
-		fmt.Println(err)
+		log.Printf("save data to es failed %v", err)
 	}
 	_, err =  ioutil.ReadAll(resp.Body)
 	if err !=nil {
-		fmt.Println(err)
+		log.Printf("save data to es failed %v", err)
 	}
 	return
 }
@@ -56,11 +56,11 @@ func saveDealInfo(in *model.HouseDealInfo) {
 	req.Header.Add("Content-Type", "application/json")
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
-		fmt.Println(err)
+		log.Printf("save data to es failed %v", err)
 	}
 	rb, err :=  ioutil.ReadAll(resp.Body)
 	if err !=nil {
-		fmt.Println(err, string(rb))
+		log.Printf("save data to es failed %v %v", string(rb), err)
 	}
 	return
 }
@@ -70,7 +70,7 @@ func QueryDealCountByInfo(in *model.HouseDealInfo) int64 {
 
 	resp,err := queryWithSql(sql)
 	if err != nil {
-		fmt.Println(err)
+		log.Printf("query es error: %v", err)
 	}
 	if strings.Contains(resp, "error") {
 		log.Printf("query es error %v", err)

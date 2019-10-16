@@ -33,6 +33,8 @@ func oneRound() {
 }
 
 func crawlChengjiao() {
+	log.Printf("start chengjiao \n")
+
 	for _, v := range communityNames {
 		lianjia.CrawlAllChengjiaoByCommunity(v)
 	}
@@ -40,7 +42,7 @@ func crawlChengjiao() {
 
 func crawlpublish() {
 	date := time.Now().Format("20060102")
-	log.Printf("start chengjiao of %s \n", date)
+	log.Printf("start publish f %s \n", date)
 
 	count:= lianjia.QueryErshouInfoCount(date)
 
